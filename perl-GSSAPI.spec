@@ -5,7 +5,7 @@
 #
 
 Name:           perl-GSSAPI
-Version:        0.21
+Version:        0.22
 Release:        1%{?dist}
 Summary:        Perl extension providing access to the GSSAPIv2 library
 
@@ -17,8 +17,8 @@ BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:  perl
 BuildRequires:  krb5-devel
+BuildRequires:  which
 BuildRequires:  perl(Test::Pod) >= 1.00
-BuildRequires:  perl(Test::Pod::Coverage) >= 1.04
 Requires:       perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
 
 %description
@@ -64,6 +64,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Mon May 29 2006 Jose Pedro Oliveira <jpo at di.uminho.pt> - 0.22-1
+- Update to 0.22.
+
 * Thu Apr  6 2006 Jose Pedro Oliveira <jpo at di.uminho.pt> - 0.21-1
 - Update to 0.21.
 
