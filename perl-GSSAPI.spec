@@ -6,7 +6,7 @@
 
 Name:           perl-GSSAPI
 Version:        0.23
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Perl extension providing access to the GSSAPIv2 library
 
 Group:          Development/Libraries
@@ -60,10 +60,13 @@ rm -rf $RPM_BUILD_ROOT
 %doc Changes README examples/
 %{perl_vendorarch}/GSSAPI*
 %{perl_vendorarch}/auto/GSSAPI/
-%{_mandir}/man3/*.3*
+%{_mandir}/man3/*.3pm*
 
 
 %changelog
+* Sun Sep 10 2006 Jose Pedro Oliveira <jpo at di.uminho.pt> - 0.23-2
+- Rebuild for FC6.
+
 * Thu Aug  3 2006 Jose Pedro Oliveira <jpo at di.uminho.pt> - 0.23-1
 - Update to 0.23.
 
