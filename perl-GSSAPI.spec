@@ -6,11 +6,11 @@
 
 Name:           perl-GSSAPI
 Version:        0.24
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Perl extension providing access to the GSSAPIv2 library
 
 Group:          Development/Libraries
-License:        GPL or Artistic
+License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/GSSAPI/
 Source0:        http://www.cpan.org/authors/id/A/AG/AGROLMS/GSSAPI-%{version}.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
@@ -32,6 +32,7 @@ chmod -c a-x examples/*.pl
 
 
 %build
+. /etc/profile.d/krb5-devel.sh
 %{__perl} Makefile.PL INSTALLDIRS=vendor OPTIMIZE="$RPM_OPT_FLAGS"
 make %{?_smp_mflags}
 
@@ -42,7 +43,7 @@ make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
 find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} ';'
 find $RPM_BUILD_ROOT -type f -name '*.bs' -empty -exec rm -f {} ';'
 find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null ';'
-chmod -R u+w $RPM_BUILD_ROOT/*
+%{_fixperms} $RPM_BUILD_ROOT/*
 
 
 %check
@@ -63,6 +64,11 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Sat Dec 08 2007 Steven Pritchard <steve@kspei.com> 0.24-2
+- Update License tag.
+- Use fixperms macro instead of our own chmod incantation.
+- Source in /etc/profile.d/krb5-devel.sh to get our path right.
+
 * Thu Feb 22 2007 Jose Pedro Oliveira <jpo at di.uminho.pt> - 0.24-1
 - Update to 0.24.
 
