@@ -5,17 +5,16 @@
 #
 
 Name:           perl-GSSAPI
-Version:        0.23
+Version:        0.24
 Release:        2%{?dist}
 Summary:        Perl extension providing access to the GSSAPIv2 library
 
 Group:          Development/Libraries
-License:        GPL or Artistic
+License:        GPL+ or Artistic
 URL:            http://search.cpan.org/dist/GSSAPI/
 Source0:        http://www.cpan.org/authors/id/A/AG/AGROLMS/GSSAPI-%{version}.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
-BuildRequires:  perl
 BuildRequires:  krb5-devel
 BuildRequires:  which
 BuildRequires:  perl(Test::Pod) >= 1.00
@@ -29,10 +28,11 @@ distribution from MIT.
 
 %prep
 %setup -q -n GSSAPI-%{version}
-chmod a-x examples/*.pl
+chmod -c a-x examples/*.pl
 
 
 %build
+. /etc/profile.d/krb5-devel.sh
 %{__perl} Makefile.PL INSTALLDIRS=vendor OPTIMIZE="$RPM_OPT_FLAGS"
 make %{?_smp_mflags}
 
@@ -42,8 +42,8 @@ rm -rf $RPM_BUILD_ROOT
 make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
 find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} ';'
 find $RPM_BUILD_ROOT -type f -name '*.bs' -empty -exec rm -f {} ';'
-find $RPM_BUILD_ROOT -type d -depth -exec rmdir {} 2>/dev/null ';'
-chmod -R u+w $RPM_BUILD_ROOT/*
+find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null ';'
+%{_fixperms} $RPM_BUILD_ROOT/*
 
 
 %check
@@ -64,6 +64,14 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Sat Dec 08 2007 Steven Pritchard <steve@kspei.com> 0.24-2
+- Update License tag.
+- Use fixperms macro instead of our own chmod incantation.
+- Source in /etc/profile.d/krb5-devel.sh to get our path right.
+
+* Thu Feb 22 2007 Jose Pedro Oliveira <jpo at di.uminho.pt> - 0.24-1
+- Update to 0.24.
+
 * Sun Sep 10 2006 Jose Pedro Oliveira <jpo at di.uminho.pt> - 0.23-2
 - Rebuild for FC6.
 
