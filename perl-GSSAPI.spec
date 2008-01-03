@@ -6,7 +6,7 @@
 
 Name:           perl-GSSAPI
 Version:        0.24
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Perl extension providing access to the GSSAPIv2 library
 
 Group:          Development/Libraries
@@ -32,7 +32,7 @@ chmod -c a-x examples/*.pl
 
 
 %build
-. /etc/profile.d/krb5-devel.sh
+. %{_sysconfdir}/profile.d/krb5-devel.sh
 %{__perl} Makefile.PL INSTALLDIRS=vendor OPTIMIZE="$RPM_OPT_FLAGS"
 make %{?_smp_mflags}
 
@@ -64,6 +64,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Thu Jan 03 2008 Steven Pritchard <steve@kspei.com> 0.24-3
+- Use sysconfdir macro instead of hard-coding /etc.
+
 * Sat Dec 08 2007 Steven Pritchard <steve@kspei.com> 0.24-2
 - Update License tag.
 - Use fixperms macro instead of our own chmod incantation.
