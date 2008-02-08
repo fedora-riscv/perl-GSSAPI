@@ -6,7 +6,7 @@
 
 Name:           perl-GSSAPI
 Version:        0.24
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        Perl extension providing access to the GSSAPIv2 library
 
 Group:          Development/Libraries
@@ -64,6 +64,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Thu Feb 07 2008 Tom "spot" Callaway <tcallawa@redhat.com> 0.24-4
+- rebuild for new perl
+
 * Thu Jan 03 2008 Steven Pritchard <steve@kspei.com> 0.24-3
 - Use sysconfdir macro instead of hard-coding /etc.
 
