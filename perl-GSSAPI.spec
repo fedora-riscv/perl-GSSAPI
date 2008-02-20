@@ -6,7 +6,7 @@
 
 Name:           perl-GSSAPI
 Version:        0.24
-Release:        4%{?dist}
+Release:        5%{?dist}
 Summary:        Perl extension providing access to the GSSAPIv2 library
 
 Group:          Development/Libraries
@@ -64,6 +64,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Tue Feb 19 2008 Fedora Release Engineering <rel-eng@fedoraproject.org> - 0.24-5
+- Autorebuild for GCC 4.3
+
 * Thu Feb 07 2008 Tom "spot" Callaway <tcallawa@redhat.com> 0.24-4
 - rebuild for new perl
 
