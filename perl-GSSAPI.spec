@@ -5,18 +5,17 @@
 #
 
 Name:           perl-GSSAPI
-Version:        0.24
-Release:        6%{?dist}
+Version:        0.26
+Release:        1%{?dist}
 Summary:        Perl extension providing access to the GSSAPIv2 library
-
-Group:          Development/Libraries
 License:        GPL+ or Artistic
+Group:          Development/Libraries
 URL:            http://search.cpan.org/dist/GSSAPI/
 Source0:        http://www.cpan.org/authors/id/A/AG/AGROLMS/GSSAPI-%{version}.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
-
 BuildRequires:  krb5-devel
 BuildRequires:  which
+BuildRequires:  perl(ExtUtils::MakeMaker)
 BuildRequires:  perl(Test::Pod) >= 1.00
 Requires:       perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
 
@@ -25,45 +24,46 @@ This module gives access to the routines of the GSSAPI library, as
 described in rfc2743 and rfc2744 and implemented by the Kerberos-1.2
 distribution from MIT.
 
-
 %prep
 %setup -q -n GSSAPI-%{version}
 chmod -c a-x examples/*.pl
-
 
 %build
 . %{_sysconfdir}/profile.d/krb5-devel.sh
 %{__perl} Makefile.PL INSTALLDIRS=vendor OPTIMIZE="$RPM_OPT_FLAGS"
 make %{?_smp_mflags}
 
-
 %install
 rm -rf $RPM_BUILD_ROOT
-make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
-find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} ';'
-find $RPM_BUILD_ROOT -type f -name '*.bs' -empty -exec rm -f {} ';'
-find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null ';'
-%{_fixperms} $RPM_BUILD_ROOT/*
 
+make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
+
+find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
+find $RPM_BUILD_ROOT -type f -name '*.bs' -empty -exec rm -f {} \;
+find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
+
+%{_fixperms} $RPM_BUILD_ROOT/*
 
 %check
 # fails a couple of tests if network not available
 %{?_with_testsuite:make test}
 
-
 %clean
 rm -rf $RPM_BUILD_ROOT
-
 
 %files
 %defattr(-,root,root,-)
 %doc Changes README examples/
+%{perl_vendorarch}/auto/*
 %{perl_vendorarch}/GSSAPI*
-%{perl_vendorarch}/auto/GSSAPI/
-%{_mandir}/man3/*.3pm*
-
+%{_mandir}/man3/*
 
 %changelog
+* Thu May 15 2008 Steven Pritchard <steve@kspei.com> 0.26-1
+- Update to 0.26.
+- Cleanup a little to more closely match cpanspec output.
+- BR ExtUtils::MakeMaker.
+
 * Mon Mar  3 2008 Tom "spot" Callaway <tcallawa@redhat.com> 0.24-6
 - rebuild for new perl (again)
 
