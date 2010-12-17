@@ -6,7 +6,7 @@
 
 Name:           perl-GSSAPI
 Version:        0.26
-Release:        6%{?dist}
+Release:        7%{?dist}
 Summary:        Perl extension providing access to the GSSAPIv2 library
 License:        GPL+ or Artistic
 Group:          Development/Libraries
@@ -58,6 +58,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man3/*
 
 %changelog
+* Fri Dec 17 2010 Marcela Maslanova <mmaslano@redhat.com> - 0.26-7
+- 661697 rebuild for fixing problems with vendorach/lib
+
 * Thu Jun  3 2010 Petr Pisar <ppisar@redhat.com> - 0.26-6
 - Do not source /etc/profile.d/krb5-devel.sh as krb5-devel-1.8.1-6 does not
   provide it and places executables into standard PATH.
