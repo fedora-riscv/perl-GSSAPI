@@ -5,8 +5,8 @@
 #
 
 Name:           perl-GSSAPI
-Version:        0.26
-Release:        7%{?dist}
+Version:        0.28
+Release:        1%{?dist}
 Summary:        Perl extension providing access to the GSSAPIv2 library
 License:        GPL+ or Artistic
 Group:          Development/Libraries
@@ -58,6 +58,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man3/*
 
 %changelog
+* Mon Dec 27 2010 Steven Pritchard <steve@kspei.com> 0.28-1
+- Update to 0.28.
+
 * Fri Dec 17 2010 Marcela Maslanova <mmaslano@redhat.com> - 0.26-7
 - 661697 rebuild for fixing problems with vendorach/lib
 
