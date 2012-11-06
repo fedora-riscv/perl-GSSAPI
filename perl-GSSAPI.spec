@@ -6,18 +6,24 @@
 
 Name:           perl-GSSAPI
 Version:        0.28
-Release:        6%{?dist}
+Release:        7%{?dist}
 Summary:        Perl extension providing access to the GSSAPIv2 library
 License:        GPL+ or Artistic
 Group:          Development/Libraries
 URL:            http://search.cpan.org/dist/GSSAPI/
 Source0:        http://www.cpan.org/authors/id/A/AG/AGROLMS/GSSAPI-%{version}.tar.gz
-BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires:  krb5-devel
 BuildRequires:  which
+%{?_with_testsuite:BuildRequires: perl(constant)}
+%{?_with_testsuite:BuildRequires: perl(Carp)}
+%{?_with_testsuite:BuildRequires: perl(Exporter)}
 BuildRequires:  perl(ExtUtils::MakeMaker)
-BuildRequires:  perl(Test::Pod) >= 1.00
-Requires:       perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
+%{?_with_testsuite:BuildRequires: perl(ExtUtils::testlib)}
+BuildRequires:  perl(Getopt::Long)
+%{?_with_testsuite:BuildRequires: perl(Test::More)}
+%{?_with_testsuite:BuildRequires: perl(Test::Pod) >= 1.00}
+%{?_with_testsuite:BuildRequires: perl(XSLoader)}
+Requires:       perl(:MODULE_COMPAT_%(eval "`perl -V:version`"; echo $version))
 
 %description
 This module gives access to the routines of the GSSAPI library, as
@@ -29,35 +35,30 @@ distribution from MIT.
 chmod -c a-x examples/*.pl
 
 %build
-%{__perl} Makefile.PL INSTALLDIRS=vendor OPTIMIZE="$RPM_OPT_FLAGS"
+perl Makefile.PL INSTALLDIRS=vendor OPTIMIZE="%{optflags}"
 make %{?_smp_mflags}
 
 %install
-rm -rf $RPM_BUILD_ROOT
-
-make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
-
-find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
-find $RPM_BUILD_ROOT -type f -name '*.bs' -empty -exec rm -f {} \;
-find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
-
-%{_fixperms} $RPM_BUILD_ROOT/*
+make pure_install DESTDIR=%{buildroot}
+find %{buildroot} -type f -name .packlist -exec rm -f {} \;
+find %{buildroot} -type f -name '*.bs' -empty -exec rm -f {} \;
+find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null \;
+%{_fixperms} %{buildroot}/*
 
 %check
 # fails a couple of tests if network not available
 %{?_with_testsuite:make test}
 
-%clean
-rm -rf $RPM_BUILD_ROOT
-
 %files
-%defattr(-,root,root,-)
 %doc Changes README examples/
 %{perl_vendorarch}/auto/*
 %{perl_vendorarch}/GSSAPI*
 %{_mandir}/man3/*
 
 %changelog
+* Tue Nov 06 2012 Petr Šabata <contyk@redhat.com> - 0.28-7
+- Modernize the spec a bit and fix the deps
+
 * Fri Jul 20 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 0.28-6
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_18_Mass_Rebuild
 
