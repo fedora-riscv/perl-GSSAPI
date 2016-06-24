@@ -17,6 +17,8 @@ BuildRequires:  which
 %{?_with_testsuite:BuildRequires: perl(constant)}
 %{?_with_testsuite:BuildRequires: perl(Carp)}
 %{?_with_testsuite:BuildRequires: perl(Exporter)}
+BuildRequires:  perl-devel
+BuildRequires:  perl-generators
 BuildRequires:  perl(ExtUtils::MakeMaker)
 %{?_with_testsuite:BuildRequires: perl(ExtUtils::testlib)}
 BuildRequires:  perl(Getopt::Long)
