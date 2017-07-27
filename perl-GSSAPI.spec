@@ -6,7 +6,7 @@
 
 Name:           perl-GSSAPI
 Version:        0.28
-Release:        19%{?dist}
+Release:        20%{?dist}
 Summary:        Perl extension providing access to the GSSAPIv2 library
 License:        GPL+ or Artistic
 Group:          Development/Libraries
@@ -58,6 +58,9 @@ find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null \;
 %{_mandir}/man3/*
 
 %changelog
+* Thu Jul 27 2017 Fedora Release Engineering <releng@fedoraproject.org> - 0.28-20
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Mass_Rebuild
+
 * Sun Jun 04 2017 Jitka Plesnikova <jplesnik@redhat.com> - 0.28-19
 - Perl 5.26 rebuild
 
