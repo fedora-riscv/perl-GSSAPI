@@ -6,12 +6,14 @@
 
 Name:           perl-GSSAPI
 Version:        0.28
-Release:        22%{?dist}
+Release:        23%{?dist}
 Summary:        Perl extension providing access to the GSSAPIv2 library
 License:        GPL+ or Artistic
 Group:          Development/Libraries
 URL:            http://search.cpan.org/dist/GSSAPI/
 Source0:        http://www.cpan.org/authors/id/A/AG/AGROLMS/GSSAPI-%{version}.tar.gz
+BuildRequires:  findutils
+BuildRequires:  gcc
 BuildRequires:  krb5-devel
 BuildRequires:  which
 %{?_with_testsuite:BuildRequires: perl(constant)}
@@ -19,7 +21,8 @@ BuildRequires:  which
 %{?_with_testsuite:BuildRequires: perl(Exporter)}
 BuildRequires:  perl-devel
 BuildRequires:  perl-generators
-BuildRequires:  perl(ExtUtils::MakeMaker)
+BuildRequires:  perl-interpreter
+BuildRequires:  perl(ExtUtils::MakeMaker) >= 6.76
 %{?_with_testsuite:BuildRequires: perl(ExtUtils::testlib)}
 BuildRequires:  perl(Getopt::Long)
 %{?_with_testsuite:BuildRequires: perl(Test::More)}
@@ -37,14 +40,12 @@ distribution from MIT.
 chmod -c a-x examples/*.pl
 
 %build
-perl Makefile.PL INSTALLDIRS=vendor OPTIMIZE="%{optflags}"
+perl Makefile.PL INSTALLDIRS=vendor OPTIMIZE="%{optflags}" NO_PACKLIST=1
 make %{?_smp_mflags}
 
 %install
 make pure_install DESTDIR=%{buildroot}
-find %{buildroot} -type f -name .packlist -exec rm -f {} \;
-find %{buildroot} -type f -name '*.bs' -empty -exec rm -f {} \;
-find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null \;
+find %{buildroot} -type f -name '*.bs' -empty -delete
 %{_fixperms} %{buildroot}/*
 
 %check
@@ -58,6 +59,9 @@ find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null \;
 %{_mandir}/man3/*
 
 %changelog
+* Mon Feb 19 2018 Jitka Plesnikova <jplesnik@redhat.com> - 0.28-23
+- Add build-require gcc
+
 * Thu Feb 08 2018 Fedora Release Engineering <releng@fedoraproject.org> - 0.28-22
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_28_Mass_Rebuild
 
