@@ -10,8 +10,8 @@ Release:        23%{?dist}
 Summary:        Perl extension providing access to the GSSAPIv2 library
 License:        GPL+ or Artistic
 Group:          Development/Libraries
-URL:            http://search.cpan.org/dist/GSSAPI/
-Source0:        http://www.cpan.org/authors/id/A/AG/AGROLMS/GSSAPI-%{version}.tar.gz
+URL:            https://metacpan.org/release/GSSAPI
+Source0:        https://cpan.metacpan.org/authors/id/A/AG/AGROLMS/GSSAPI-%{version}.tar.gz
 BuildRequires:  findutils
 BuildRequires:  gcc
 BuildRequires:  krb5-devel
