@@ -6,7 +6,7 @@
 
 Name:           perl-GSSAPI
 Version:        0.28
-Release:        23%{?dist}
+Release:        24%{?dist}
 Summary:        Perl extension providing access to the GSSAPIv2 library
 License:        GPL+ or Artistic
 Group:          Development/Libraries
@@ -59,6 +59,9 @@ find %{buildroot} -type f -name '*.bs' -empty -delete
 %{_mandir}/man3/*
 
 %changelog
+* Wed Jun 27 2018 Jitka Plesnikova <jplesnik@redhat.com> - 0.28-24
+- Perl 5.28 rebuild
+
 * Mon Feb 19 2018 Jitka Plesnikova <jplesnik@redhat.com> - 0.28-23
 - Add build-require gcc
 
