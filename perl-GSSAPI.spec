@@ -6,7 +6,7 @@
 
 Name:           perl-GSSAPI
 Version:        0.28
-Release:        28%{?dist}
+Release:        29%{?dist}
 Summary:        Perl extension providing access to the GSSAPIv2 library
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/GSSAPI
@@ -58,6 +58,9 @@ find %{buildroot} -type f -name '*.bs' -empty -delete
 %{_mandir}/man3/*
 
 %changelog
+* Thu Jan 30 2020 Fedora Release Engineering <releng@fedoraproject.org> - 0.28-29
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_32_Mass_Rebuild
+
 * Fri Jul 26 2019 Fedora Release Engineering <releng@fedoraproject.org> - 0.28-28
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_31_Mass_Rebuild
 
