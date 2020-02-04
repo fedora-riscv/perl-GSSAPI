@@ -6,7 +6,7 @@
 
 Name:           perl-GSSAPI
 Version:        0.28
-Release:        29%{?dist}
+Release:        30%{?dist}
 Summary:        Perl extension providing access to the GSSAPIv2 library
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/GSSAPI
@@ -39,11 +39,12 @@ distribution from MIT.
 chmod -c a-x examples/*.pl
 
 %build
-perl Makefile.PL INSTALLDIRS=vendor OPTIMIZE="%{optflags}" NO_PACKLIST=1
-make %{?_smp_mflags}
+perl Makefile.PL INSTALLDIRS=vendor OPTIMIZE="%{optflags}" NO_PACKLIST=1 \
+                 NO_PERLLOCAL=1
+%make_build
 
 %install
-make pure_install DESTDIR=%{buildroot}
+%make_install
 find %{buildroot} -type f -name '*.bs' -empty -delete
 %{_fixperms} %{buildroot}/*
 
@@ -58,6 +59,11 @@ find %{buildroot} -type f -name '*.bs' -empty -delete
 %{_mandir}/man3/*
 
 %changelog
+* Tue Feb 04 2020 Tom Stellard <tstellar@redhat.com> - 0.28-30
+- Spec file cleanups: Use make_build and make_install macros
+- https://docs.fedoraproject.org/en-US/packaging-guidelines/#_parallel_make
+- https://fedoraproject.org/wiki/Perl/Tips#ExtUtils::MakeMake
+
 * Thu Jan 30 2020 Fedora Release Engineering <releng@fedoraproject.org> - 0.28-29
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_32_Mass_Rebuild
 
