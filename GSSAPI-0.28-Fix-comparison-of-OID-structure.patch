@@ -1,0 +1,35 @@
+From 4b213b1f0c9681f74d12f991db008f1d891d7447 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Michal=20Josef=20=C5=A0pa=C4=8Dek?= <mspacek@redhat.com>
+Date: Mon, 16 Aug 2021 15:30:50 +0200
+Subject: [PATCH] Fix comparison of OID structure
+
+---
+ xs/OID.xs | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/xs/OID.xs b/xs/OID.xs
+index c805e45..7c2a4ba 100644
+--- a/xs/OID.xs
++++ b/xs/OID.xs
+@@ -15,12 +15,12 @@ DESTROY(oid)
+     PPCODE:
+ #if !defined(HEIMDAL)
+ 	if (oid != NULL &&
+-	    oid != __KRB5_MECHTYPE_OID &&
+-	    oid != __KRB5_OLD_MECHTYPE_OID &&
+-	    oid != __GSS_KRB5_NT_USER_NAME &&
+-	    oid != __GSS_KRB5_NT_PRINCIPAL_NAME &&
+-	    oid != __SPNEGO_MECHTYPE_OID &&
+-	    oid != __gss_mech_krb5_v2  ) {
++	    ! gss_oid_equal(oid, __KRB5_MECHTYPE_OID) &&
++	    ! gss_oid_equal(oid, __KRB5_OLD_MECHTYPE_OID) &&
++	    ! gss_oid_equal(oid, __GSS_KRB5_NT_USER_NAME) &&
++	    ! gss_oid_equal(oid, __GSS_KRB5_NT_PRINCIPAL_NAME) &&
++	    ! gss_oid_equal(oid, __SPNEGO_MECHTYPE_OID) &&
++	    ! gss_oid_equal(oid, __gss_mech_krb5_v2) ) {
+ 	    (void)gss_release_oid(&minor, &oid);
+ 	}
+ #endif
+-- 
+2.31.1
+

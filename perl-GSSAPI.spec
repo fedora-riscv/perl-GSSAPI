@@ -6,27 +6,38 @@
 
 Name:           perl-GSSAPI
 Version:        0.28
-Release:        32%{?dist}
+Release:        33%{?dist}
 Summary:        Perl extension providing access to the GSSAPIv2 library
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/GSSAPI
 Source0:        https://cpan.metacpan.org/authors/id/A/AG/AGROLMS/GSSAPI-%{version}.tar.gz
+# Fix comparison of OID structure (CPAN RT#121873)
+Patch0:         GSSAPI-0.28-Fix-comparison-of-OID-structure.patch
+BuildRequires:  coreutils
 BuildRequires:  findutils
 BuildRequires:  gcc
 BuildRequires:  krb5-devel
-BuildRequires:  which
-%{?_with_testsuite:BuildRequires: perl(constant)}
-%{?_with_testsuite:BuildRequires: perl(Carp)}
-%{?_with_testsuite:BuildRequires: perl(Exporter)}
+BuildRequires:  make
 BuildRequires:  perl-devel
 BuildRequires:  perl-generators
 BuildRequires:  perl-interpreter
+BuildRequires:  perl(Config)
 BuildRequires:  perl(ExtUtils::MakeMaker) >= 6.76
-%{?_with_testsuite:BuildRequires: perl(ExtUtils::testlib)}
 BuildRequires:  perl(Getopt::Long)
-%{?_with_testsuite:BuildRequires: perl(Test::More)}
-%{?_with_testsuite:BuildRequires: perl(Test::Pod) >= 1.00}
+BuildRequires:  perl(strict)
+BuildRequires:  which
+# Run-time
+%{?_with_testsuite:BuildRequires: perl(Carp)}
+%{?_with_testsuite:BuildRequires: perl(constant)}
+%{?_with_testsuite:BuildRequires: perl(Exporter)}
+%{?_with_testsuite:BuildRequires: perl(overload)}
+%{?_with_testsuite:BuildRequires: perl(warnings)}
 %{?_with_testsuite:BuildRequires: perl(XSLoader)}
+# Tests
+%{?_with_testsuite:BuildRequires: perl(ExtUtils::testlib)}
+%{?_with_testsuite:BuildRequires: perl(Test::More)}
+# Optional tests
+%{?_with_testsuite:BuildRequires: perl(Test::Pod) >= 1.00}
 Requires:       perl(:MODULE_COMPAT_%(eval "`perl -V:version`"; echo $version))
 
 %description
@@ -36,6 +47,7 @@ distribution from MIT.
 
 %prep
 %setup -q -n GSSAPI-%{version}
+%patch0 -p1
 chmod -c a-x examples/*.pl
 
 %build
@@ -58,6 +70,9 @@ find %{buildroot} -type f -name '*.bs' -empty -delete
 %{_mandir}/man3/*
 
 %changelog
+* Mon Aug 16 2021 Jitka Plesnikova <jplesnik@redhat.com> - 0.28-33
+- Fix comparison of OID structure
+
 * Tue Jul 28 2020 Fedora Release Engineering <releng@fedoraproject.org> - 0.28-32
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
 
