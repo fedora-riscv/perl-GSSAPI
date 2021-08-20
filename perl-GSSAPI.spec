@@ -6,13 +6,13 @@
 
 Name:           perl-GSSAPI
 Version:        0.28
-Release:        33%{?dist}
+Release:        34%{?dist}
 Summary:        Perl extension providing access to the GSSAPIv2 library
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/GSSAPI
 Source0:        https://cpan.metacpan.org/authors/id/A/AG/AGROLMS/GSSAPI-%{version}.tar.gz
-# Fix comparison of OID structure (CPAN RT#121873)
-Patch0:         GSSAPI-0.28-Fix-comparison-of-OID-structure.patch
+# Fix a crash in gss_release_oid() when destructing out_mech (rhbz #1994263, CPAN RT#121873)
+Patch0:         GSSAPI-0.28-Fix-a-crash-in-gss_release_oid-when-destructing-out_.patch
 BuildRequires:  coreutils
 BuildRequires:  findutils
 BuildRequires:  gcc
@@ -70,6 +70,9 @@ find %{buildroot} -type f -name '*.bs' -empty -delete
 %{_mandir}/man3/*
 
 %changelog
+* Thu Aug 19 2021 Jitka Plesnikova <jplesnik@redhat.com> - 0.28-34
+- Fix a crash in gss_release_oid() when destructing out_mech
+
 * Mon Aug 16 2021 Jitka Plesnikova <jplesnik@redhat.com> - 0.28-33
 - Fix comparison of OID structure
 
