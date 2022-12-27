@@ -6,7 +6,7 @@
 
 Name:           perl-GSSAPI
 Version:        0.28
-Release:        40%{?dist}
+Release:        40.rv64%{?dist}
 Summary:        Perl extension providing access to the GSSAPIv2 library
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/GSSAPI
@@ -52,6 +52,7 @@ chmod -c a-x examples/*.pl
 
 %build
 perl Makefile.PL INSTALLDIRS=vendor OPTIMIZE="%{optflags}" NO_PACKLIST=1 NO_PERLLOCAL=1
+sed -i 's@-Wl,-dT,/builddir/build/BUILD/krb5-1.19.2/.package_note-krb5-1.19.2-3.1.fc36.riscv64.ld@@g' Makefile
 %{make_build}
 
 %install
@@ -70,6 +71,9 @@ find %{buildroot} -type f -name '*.bs' -empty -delete
 %{_mandir}/man3/*
 
 %changelog
+* Tue Dec 27 2022 Liu Yang <Yang.Liu.sn@gmail.com> - 0.28-40.rv64
+- Fix pakcage note issue on riscv64.
+
 * Fri Jul 22 2022 Fedora Release Engineering <releng@fedoraproject.org> - 0.28-40
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_37_Mass_Rebuild
 
